@@ -13,7 +13,7 @@
     <properties>
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.source>21</maven.compiler.source>
-        <exec.mainClass>lsit.Main</exec.mainClass>
+        <exec.mainClass>Bookstore.Main</exec.mainClass>
     </properties>
 
     <parent>
