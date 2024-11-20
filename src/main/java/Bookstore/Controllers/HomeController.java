@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @GetMapping("/")
-    public ResponseEntity get(){
-        return ResponseEntity.ok("Hello World!");
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("Welcome to the Bookstore!");
     }
 
     @GetMapping("/user")
