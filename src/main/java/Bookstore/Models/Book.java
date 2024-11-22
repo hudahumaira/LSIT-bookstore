@@ -7,17 +7,19 @@ public class Book {
     private String title;
     private String author;
     private double price;
-    private String genre; // Optional
+    private String genre; 
+    private int quantity; 
 
     // Constructors
     public Book() {}
 
-    public Book(UUID id, String title, String author, double price, String genre) {
+    public Book(UUID id, String title, String author, double price, String genre, int quantity) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.price = price;
         this.genre = genre;
+        this.quantity = quantity;
     }
 
     // Getters and Setters
@@ -59,5 +61,13 @@ public class Book {
 
     public void setGenre(String genre) {
         this.genre = genre;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

@@ -1,11 +1,10 @@
 package Bookstore.Repositories;
 
-import Bookstore.Utils.SampleBooks;
+import Bookstore.Utils.BookInventory;
 import Bookstore.Models.Book;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-
 
 @Repository
 public class BookRepository {
@@ -13,7 +12,11 @@ public class BookRepository {
 
     public BookRepository() {
         // Load sample books into the repository
-        SampleBooks.getBooks().forEach(book -> books.put(book.getId(), book));
+        BookInventory.getBooks().forEach(book -> books.put(book.getId(), book));
+    }
+
+    public boolean exists(UUID id) {
+        return books.containsKey(id);
     }
 
     public List<Book> list() {
@@ -25,13 +28,30 @@ public class BookRepository {
     }
 
     public void add(Book book) {
-        book.setId(UUID.randomUUID());
+        if (book.getQuantity() <= 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
         books.put(book.getId(), book);
     }
 
-    // TODO: Implement the update method like the teacher did
-
     public void update(Book book) {
+        // Ensure the book has a valid quantity
+        if (book.getQuantity() < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        books.put(book.getId(), book);
+    }
+
+    public void updateQuantity(UUID id, int quantity) {
+        // Retrieve the book and update its quantity
+        Book book = books.get(id);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found.");
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        book.setQuantity(quantity);
         books.put(book.getId(), book);
     }
 

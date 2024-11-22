@@ -4,18 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import Bookstore.Models.Book;
 import Bookstore.Repositories.BookRepository;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.UUID;
-
-// TO DO: add swagger annotations for all controllers
 
 @RestController
 @RequestMapping("/books")
@@ -38,6 +28,14 @@ public class BookController {
 
     @PostMapping
     public Book addBook(@RequestBody Book book) {
+        // Ensure the book has a valid quantity
+        UUID newId;
+        // Generate a new random UUID and ensure it is not already in use
+        do {
+            newId = UUID.randomUUID();
+        } while (bookRepository.exists(newId));
+
+        book.setId(newId); // Set the new unique ID
         bookRepository.add(book);
         return book;
     }
@@ -45,6 +43,24 @@ public class BookController {
     @PutMapping("/{id}")
     public Book updateBook(@PathVariable("id") UUID id, @RequestBody Book book) {
         book.setId(id);
+        // Ensure the book has a valid quantity
+        if (book.getQuantity() < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        bookRepository.update(book);
+        return book;
+    }
+
+    @PutMapping("/{id}/updateQuantity/{quantity}")
+    public Book updateBookQuantity(@PathVariable("id") UUID id, @PathVariable("quantity") int quantity) {
+        Book book = bookRepository.get(id);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found.");
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Quantity cannot be negative.");
+        }
+        book.setQuantity(quantity);
         bookRepository.update(book);
         return book;
     }
