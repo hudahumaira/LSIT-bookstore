@@ -6,6 +6,13 @@
             "type": "java",
             "name": "Main",
             "request": "launch",
+            "mainClass": "Bookstore.Main",
+            "projectName": "lsit"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
             "mainClass": "lsit.Main",
             "projectName": "lsit"
         }
