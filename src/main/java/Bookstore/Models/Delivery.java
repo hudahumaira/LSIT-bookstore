@@ -1,14 +1,15 @@
 package Bookstore.Models;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class Delivery {
 
+    //private String trackingNumber; Is not the same as idOrder?
     private String idOrder;
-    //private String trackingNumber; // Not the same as idOrder?
-
-    private UUID idBook;
+    private final Map<UUID, Book> idBooks = new HashMap<>();
     private LocalDateTime shippingDate;
     private boolean shipped;
 
@@ -18,9 +19,9 @@ public class Delivery {
 
     }
 
-    public Delivery(String idOrder, UUID idBook, Boolean shipped ){
+    public Delivery(String idOrder, UUID idBook, Book book, Boolean shipped ){
         this.idOrder = idOrder;
-        this.idBook = idBook;
+        this.idBooks.put(idBook, book);
         this.shipped = shipped;
 
     }
@@ -34,13 +35,17 @@ public class Delivery {
         this.idOrder = idOrder;
     }
 
-    public UUID getIdBook(){
-        return idBook;
+    public Map<UUID, Book> getIdBooks(){
+        return idBooks;
 
     }
 
-    public void setIdBook(UUID idBook) {
-        this.idBook = idBook;
+    public void setIdBook(Map<UUID, Book> idBooks) {
+        this.idBooks.putAll(idBooks);
+    }
+    
+    public void addBook(UUID idBook, Book book) {
+        this.idBooks.put(idBook, book);
     }
 
     public LocalDateTime getShippingDate(){
