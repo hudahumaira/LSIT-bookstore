@@ -8,12 +8,12 @@ import java.util.*;
 @Repository
 public class DeliveryRepository {
 
-    private static Map<String, Delivery> deliveries = new HashMap<>();
+    private static Map<UUID, Delivery> deliveries = new HashMap<>();
 
     // Create a delivery
     public Delivery save(Delivery delivery){
-        if(delivery.getIdOrder() == null || delivery.getIdOrder().isEmpty()){
-            delivery.setIdOrder(UUID.randomUUID().toString());
+        if(delivery.getIdOrder() == null){
+            delivery.setIdOrder(UUID.randomUUID());
         }
 
         deliveries.put(delivery.getIdOrder(), delivery);
@@ -22,18 +22,17 @@ public class DeliveryRepository {
     }
 
     // Find a delivery by idOrder
-    public Delivery findById(String idOrder){
+    public Delivery findById(UUID idOrder){
         return deliveries.get(idOrder);
     }
 
     // Check if a delivery exist by idOrder
-    public boolean existsById(String idOrder){
+    public boolean existsById(UUID idOrder){
         return deliveries.containsKey(idOrder);
     }
 
     // Delete a delivery by idOrder
-
-    public void deleteById(String idOrder){
+    public void deleteById(UUID idOrder){
         deliveries.remove(idOrder);
     }
     
