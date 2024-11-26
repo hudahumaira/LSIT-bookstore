@@ -7,7 +7,7 @@ import java.util.*;
 
 @Repository
 public class CustomerCartRepository {
-    private final Map<UUID, CustomerCart> carts = new HashMap<>();
+    private static final Map<UUID, CustomerCart> carts = new HashMap<>();
 
     // Create a new cart
     public CustomerCart createCart() {
@@ -17,7 +17,7 @@ public class CustomerCartRepository {
     }
 
     // Get a cart by ID
-    public CustomerCart getCart(UUID id) {
+    public static CustomerCart getCart(UUID id) {
         return carts.get(id);
     }
 

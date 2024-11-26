@@ -1,5 +1,6 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
     "java.compile.nullAnalysis.mode": "automatic",
-    "workbench.colorTheme": "Visual Studio Dark - C++"
+    "workbench.colorTheme": "Visual Studio Dark - C++",
+    "java.debug.settings.onBuildFailureProceed": true
 }

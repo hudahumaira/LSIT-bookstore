@@ -1,9 +1,10 @@
 package Bookstore.Controllers;
 
+import Bookstore.Models.CustomerCart;
 import org.springframework.web.bind.annotation.*;
 import Bookstore.Models.Order;
 import Bookstore.Repositories.OrderRepository;
-
+import Bookstore.Repositories.CustomerCartRepository;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,8 +29,30 @@ public class OrderController {
     }
 
     @PutMapping("/{id}/approve")
-    public Order approveOrder(@PathVariable("id") UUID id) {
-        Order order = orderRepository.get(id);
+    public Order approveOrder(@PathVariable("id") UUID cartId) {
+        CustomerCart cart = CustomerCartRepository.getCart(cartId);
+        Order order = orderRepository.get(cartId);
+        //no book
+        if (order == null) {
+            System.out.println("Order not found.");
+            order.setApproved(false);
+            orderRepository.update(order);
+            return order;
+        }
+        //no card
+        if (cartId == null) {
+            System.out.println("Associated cart not found.");
+            order.setApproved(false);
+            orderRepository.update(order);
+            return order;
+        }
+        //missing info
+        if (!cart.isCustomerInfoComplete()) {
+            System.out.println("Customer details (name, address, email) are incomplete.");
+            order.setApproved(false);
+            orderRepository.update(order);
+            return order;
+        }
         order.setApproved(true);
         orderRepository.update(order);
         return order;

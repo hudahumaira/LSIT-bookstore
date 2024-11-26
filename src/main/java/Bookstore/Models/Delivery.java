@@ -1,15 +1,18 @@
 package Bookstore.Models;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 public class Delivery {
 
+    //TODO
+    // Do NOT use idOrder cause is the same as idCart
+
     //private String trackingNumber; Is not the same as idOrder?
-    private String idOrder;
-    private final Map<UUID, Book> idBooks = new HashMap<>();
+    //private UUID idOrder;
+    private UUID idCart;
+    private List<Book> books;
     private LocalDateTime shippingDate;
     private boolean shipped;
 
@@ -19,33 +22,36 @@ public class Delivery {
 
     }
 
-    public Delivery(String idOrder, UUID idBook, Book book, Boolean shipped ){
-        this.idOrder = idOrder;
-        this.idBooks.put(idBook, book);
-        this.shipped = shipped;
+    public Delivery(Order order, CustomerCart cart, Book book){
+        //this.idOrder = order.getId();
+        this.idCart = cart.getId();
+        this.books = cart.getBooks();
+        this.shipped = order.isShipped();
 
     }
 
     //Getters and setters
-    public String getIdOrder(){
+    /*
+    public UUID getIdOrder(){
         return idOrder;
     }
 
-    public void setIdOrder(String idOrder){
+    public void setIdOrder(UUID idOrder){
         this.idOrder = idOrder;
     }
 
-    public Map<UUID, Book> getIdBooks(){
-        return idBooks;
+     */
 
-    }
-
-    public void setIdBook(Map<UUID, Book> idBooks) {
-        this.idBooks.putAll(idBooks);
+    public UUID getIdCart(){
+        return idCart;
     }
     
-    public void addBook(UUID idBook, Book book) {
-        this.idBooks.put(idBook, book);
+    public void setIdCart(UUID idCart){
+        this.idCart = idCart;
+    }
+
+    public List<Book> getBooks(){
+        return books;
     }
 
     public LocalDateTime getShippingDate(){
@@ -56,11 +62,4 @@ public class Delivery {
         this.shippingDate = shippingDate;
     }
 
-    public boolean isShipped() {
-        return shipped;
-    }
-
-    public void setShipped(boolean shipped) {
-        this.shipped = shipped;
-    }
 }
