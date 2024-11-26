@@ -76,6 +76,7 @@ public class ManagementService {
         return "Order shipped successfully.";
     }
 
+    // 'check details' part in the flowchart
     public String receiveOrder(UUID orderId) {
         if (!deliveryRepository.existsById(orderId.toString())) {
             throw new IllegalArgumentException("Delivery not found.");
@@ -83,4 +84,6 @@ public class ManagementService {
 
         return "Order marked as received.";
     }
+
+    // for the payment customer-cart-controller (pay) is boolean also take care of that
 }
