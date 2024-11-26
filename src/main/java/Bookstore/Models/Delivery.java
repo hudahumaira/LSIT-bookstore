@@ -6,8 +6,11 @@ import java.util.UUID;
 
 public class Delivery {
 
+    //TODO
+    // Do NOT use idOrder cause is the same as idCart
+
     //private String trackingNumber; Is not the same as idOrder?
-    private UUID idOrder;
+    //private UUID idOrder;
     private UUID idCart;
     private List<Book> books;
     private LocalDateTime shippingDate;
@@ -20,7 +23,7 @@ public class Delivery {
     }
 
     public Delivery(Order order, CustomerCart cart, Book book){
-        this.idOrder = order.getId();
+        //this.idOrder = order.getId();
         this.idCart = cart.getId();
         this.books = cart.getBooks();
         this.shipped = order.isShipped();
@@ -28,6 +31,7 @@ public class Delivery {
     }
 
     //Getters and setters
+    /*
     public UUID getIdOrder(){
         return idOrder;
     }
@@ -36,11 +40,13 @@ public class Delivery {
         this.idOrder = idOrder;
     }
 
+     */
+
     public UUID getIdCart(){
         return idCart;
     }
     
-    public void getIdCart(UUID idCart){
+    public void setIdCart(UUID idCart){
         this.idCart = idCart;
     }
 

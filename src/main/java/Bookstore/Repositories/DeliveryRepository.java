@@ -12,11 +12,11 @@ public class DeliveryRepository {
 
     // Create a delivery
     public Delivery save(Delivery delivery){
-        if(delivery.getIdOrder() == null){
-            delivery.setIdOrder(UUID.randomUUID());
+        if(delivery.getIdCart() == null){
+            delivery.setIdCart(UUID.randomUUID());
         }
 
-        deliveries.put(delivery.getIdOrder(), delivery);
+        deliveries.put(delivery.getIdCart(), delivery);
 
         return delivery;
     }
