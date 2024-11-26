@@ -2,6 +2,9 @@ package Bookstore.Controllers;
 
 import org.springframework.web.bind.annotation.*;
 import Bookstore.Models.Delivery;
+import Bookstore.Models.Order;
+import Bookstore.Models.CustomerCart;
+import Bookstore.Models.Book;
 import Bookstore.Repositories.DeliveryRepository;
 
 import java.time.LocalDateTime;
@@ -17,16 +20,16 @@ public class DeliveryController {
 
     // Get delivery by order
     @GetMapping("/{idOrder}")
-    public Delivery getDeliverybyId(@PathVariable String idOrder){
+    public Delivery getDeliverybyId(@PathVariable UUID idOrder){
         Delivery delivery = deliveryRepository.findById(idOrder);
         return delivery;
     }
 
     // Create a new delivery
-
     @PostMapping
-    public Delivery creatDelivery(@RequestBody Delivery delivery){
-        delivery.setShippingDate(LocalDateTime.now());
+    public Delivery createDelivery(@RequestBody Delivery delivery, Order order, CustomerCart cart, Book book){
+        delivery = new Delivery(order, cart, book);
+        //delivery.setShippingDate(LocalDateTime.now());
 
         return deliveryRepository.save(delivery);
     }
@@ -51,7 +54,7 @@ public class DeliveryController {
 
     // Deleted delivery
     @DeleteMapping
-    public void deleteDelivery(@PathVariable String idOrder){
+    public void deleteDelivery(@PathVariable UUID idOrder){
         if (!deliveryRepository.existsById(idOrder)) {
             throw new RuntimeException("Delivery not found");
         }
