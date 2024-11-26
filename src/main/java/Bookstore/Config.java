@@ -21,6 +21,8 @@ public class Config{
                 .oauth2Login(withDefaults())
                 .authorizeHttpRequests(a -> a
                         .requestMatchers("/user").authenticated()
+                        //Todo
+                        //change this so is not /pets
                         .requestMatchers(HttpMethod.POST, "/pets").authenticated()
                         .anyRequest().permitAll()
                 )
