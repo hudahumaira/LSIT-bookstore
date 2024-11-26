@@ -1,65 +1,25 @@
 package Bookstore.Models;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 public class Delivery {
+    private final UUID cartId; // Associated cart ID
+    private String status; // Delivery status (e.g., "PENDING", "PACKED", "DELIVERED")
 
-    //TODO
-    // Do NOT use idOrder cause is the same as idCart
-
-    //private String trackingNumber; Is not the same as idOrder?
-    //private UUID idOrder;
-    private UUID idCart;
-    private List<Book> books;
-    private LocalDateTime shippingDate;
-    private boolean shipped;
-
-    
-    //Constructor
-    public Delivery(){
-
+    public Delivery(UUID cartId) {
+        this.cartId = cartId;
+        this.status = "PENDING"; // Default status
     }
 
-    public Delivery(Order order, CustomerCart cart, Book book){
-        //this.idOrder = order.getId();
-        this.idCart = cart.getId();
-        this.books = cart.getBooks();
-        this.shipped = order.isShipped();
-
+    public UUID getCartId() {
+        return cartId;
     }
 
-    //Getters and setters
-    /*
-    public UUID getIdOrder(){
-        return idOrder;
+    public String getStatus() {
+        return status;
     }
 
-    public void setIdOrder(UUID idOrder){
-        this.idOrder = idOrder;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
-     */
-
-    public UUID getIdCart(){
-        return idCart;
-    }
-    
-    public void setIdCart(UUID idCart){
-        this.idCart = idCart;
-    }
-
-    public List<Book> getBooks(){
-        return books;
-    }
-
-    public LocalDateTime getShippingDate(){
-        return shippingDate;
-    }
-
-    public void setShippingDate(LocalDateTime shippingDate){
-        this.shippingDate = shippingDate;
-    }
-
 }

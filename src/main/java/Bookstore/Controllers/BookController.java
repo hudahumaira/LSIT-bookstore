@@ -16,19 +16,25 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping
-    public List<Book> listBooks() {
-        return bookRepository.list();
-    }
 
+    // Step 1: Get details of a specific book
     @GetMapping("/{id}")
     public Book getBook(@PathVariable("id") UUID id) {
-        return bookRepository.get(id);
+        Book book = bookRepository.get(id);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found.");
+        }
+        return book;
     }
 
+    // Step 2: Add a new book
     @PostMapping
     public Book addBook(@RequestBody Book book) {
         // Ensure the book has a valid quantity
+        if (book.getQuantity() < 0) {
+            throw new IllegalArgumentException("Book quantity cannot be negative.");
+        }
+
         UUID newId;
         // Generate a new random UUID and ensure it is not already in use
         do {
@@ -40,17 +46,7 @@ public class BookController {
         return book;
     }
 
-    @PutMapping("/{id}")
-    public Book updateBook(@PathVariable("id") UUID id, @RequestBody Book book) {
-        book.setId(id);
-        // Ensure the book has a valid quantity
-        if (book.getQuantity() < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative.");
-        }
-        bookRepository.update(book);
-        return book;
-    }
-
+    // Step 3: Update the quantity of an existing book
     @PutMapping("/{id}/updateQuantity/{quantity}")
     public Book updateBookQuantity(@PathVariable("id") UUID id, @PathVariable("quantity") int quantity) {
         Book book = bookRepository.get(id);
@@ -65,8 +61,13 @@ public class BookController {
         return book;
     }
 
+    // Step 4: Delete a book
     @DeleteMapping("/{id}")
     public void deleteBook(@PathVariable("id") UUID id) {
+        Book book = bookRepository.get(id);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found.");
+        }
         bookRepository.remove(id);
     }
 }

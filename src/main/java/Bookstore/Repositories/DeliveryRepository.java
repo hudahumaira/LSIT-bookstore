@@ -3,37 +3,34 @@ package Bookstore.Repositories;
 import Bookstore.Models.Delivery;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class DeliveryRepository {
+    private final Map<UUID, Delivery> deliveries = new HashMap<>();
 
-    private static Map<UUID, Delivery> deliveries = new HashMap<>();
-
-    // Create a delivery
-    public Delivery save(Delivery delivery){
-        if(delivery.getIdCart() == null){
-            delivery.setIdCart(UUID.randomUUID());
-        }
-
-        deliveries.put(delivery.getIdCart(), delivery);
-
+    // Create a new delivery associated with a cart
+    public Delivery createDelivery(UUID cartId) {
+        Delivery delivery = new Delivery(cartId);
+        deliveries.put(cartId, delivery);
         return delivery;
     }
 
-    // Find a delivery by idOrder
-    public Delivery findById(UUID idOrder){
-        return deliveries.get(idOrder);
+    // Get a delivery by cart ID
+    public Delivery getDelivery(UUID cartId) {
+        return deliveries.get(cartId);
     }
 
-    // Check if a delivery exist by idOrder
-    public boolean existsById(UUID idOrder){
-        return deliveries.containsKey(idOrder);
+    // Update the delivery status
+    public void updateDelivery(Delivery delivery) {
+        deliveries.put(delivery.getCartId(), delivery);
     }
 
-    // Delete a delivery by idOrder
-    public void deleteById(UUID idOrder){
-        deliveries.remove(idOrder);
+    // Remove a delivery by cart ID
+    public void removeDelivery(UUID cartId) {
+        deliveries.remove(cartId);
     }
-    
 }
+

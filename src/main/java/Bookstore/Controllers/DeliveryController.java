@@ -1,53 +1,67 @@
 package Bookstore.Controllers;
 
-import org.springframework.web.bind.annotation.*;
-import Bookstore.Models.Delivery;
-import Bookstore.Models.Order;
-import Bookstore.Models.CustomerCart;
 import Bookstore.Models.Book;
-import Bookstore.Repositories.DeliveryRepository;
+import Bookstore.Models.CustomerCart;
+import Bookstore.Models.Website;
+import Bookstore.Repositories.BookRepository;
+import Bookstore.Repositories.CustomerCartRepository;
+import Bookstore.Repositories.WebsiteRepository;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/delivery")
 public class DeliveryController {
+    private final BookRepository bookRepository;
+    private final CustomerCartRepository cartRepository;
+    private final WebsiteRepository websiteRepository;
 
-    private DeliveryRepository deliveryRepository;
-
-    // Get delivery by order
-    @GetMapping("/{idOrder}")
-    public Delivery getDeliverybyId(@PathVariable UUID idOrder){
-        Delivery delivery = deliveryRepository.findById(idOrder);
-        return delivery;
+    public DeliveryController(BookRepository bookRepository, CustomerCartRepository cartRepository, WebsiteRepository websiteRepository) {
+        this.bookRepository = bookRepository;
+        this.cartRepository = cartRepository;
+        this.websiteRepository = websiteRepository;
     }
 
-    // Create a new delivery
-    @PostMapping
-    public Delivery createDelivery(@RequestBody Delivery delivery, Order order, CustomerCart cart, Book book){
-        delivery = new Delivery(order, cart, book);
-        //delivery.setShippingDate(LocalDateTime.now());
-
-        return deliveryRepository.save(delivery);
-    }
-
-    //Update a delivery
-    @PutMapping("/{idOrder}")
-    public void updateDelivery(@PathVariable UUID idOrder, @RequestBody Order order) {
-
-        order.setShipped(true);
-        
-    }
-
-    // Deleted delivery
-    @DeleteMapping
-    public void deleteDelivery(@PathVariable UUID idOrder){
-        if (!deliveryRepository.existsById(idOrder)) {
-            throw new RuntimeException("Delivery not found");
+    // Deliver books by updating the inventory and marking the delivery as ready
+    @PostMapping("/deliver/{cartId}")
+    public String deliverBooks(@PathVariable UUID cartId) {
+        // Get the associated cart
+        CustomerCart cart = cartRepository.getCart(cartId);
+        if (cart == null) {
+            throw new IllegalArgumentException("Cart not found.");
         }
-        deliveryRepository.deleteById(idOrder);
+
+        if (!cart.isPaid()) {
+            throw new IllegalArgumentException("Payment not completed. Cannot proceed with delivery.");
+        }
+
+        // Update inventory for books in the cart
+        for (Book cartBook : cart.getBooks()) {
+            Book storeBook = bookRepository.get(cartBook.getId());
+            if (storeBook == null) {
+                throw new IllegalArgumentException("Book not found in inventory: " + cartBook.getTitle());
+            }
+
+            if (storeBook.getQuantity() < cartBook.getQuantity()) {
+                throw new IllegalArgumentException("Not enough inventory for book: " + cartBook.getTitle());
+            }
+
+            // Update inventory
+            storeBook.setQuantity(storeBook.getQuantity() - cartBook.getQuantity());
+            bookRepository.update(storeBook);
+        }
+
+        // Get the corresponding Website entry and update the status
+        Website website = websiteRepository.checkCartStatus(cartId, cart);
+        if (website == null) {
+            throw new IllegalArgumentException("Website entry not found for cart ID: " + cartId);
+        }
+
+        // Update the Website status to DELIVERED
+        website.setOrderStatus("DELIVERED");
+        websiteRepository.updateWebsite(website);
+
+        return "Book inventory updated successfully. Delivery is now marked as DELIVERED. Cart ID: " + cartId;
     }
 }
