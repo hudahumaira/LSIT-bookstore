@@ -34,23 +34,13 @@ public class DeliveryController {
         return deliveryRepository.save(delivery);
     }
 
-    /*  Update a delivery
+    //Update a delivery
     @PutMapping("/{idOrder}")
-    public Delivery updateDelivery(@PathVariable String idOrder, @RequestBody Delivery updatedDelivery) {
-        Delivery existingDelivery = deliveryRepository.findById(idOrder);
+    public void updateDelivery(@PathVariable UUID idOrder, @RequestBody Order order) {
 
-        if (existingDelivery.existsById(idOrder)) {
-            throw new RuntimeException("Delivery not found");
-        }
-
-        // Update fields of the existing delivery with new values
-        Delivery delivery = existingDelivery.get();
-        delivery.setIdBook(updatedDelivery.getIdBook());
-        delivery.setShipped(updatedDelivery.isShipped());
-        delivery.setShippingDate(updatedDelivery.getShippingDate());
+        order.setShipped(true);
         
-        return deliveryRepository.save(delivery);
-    } */
+    }
 
     // Deleted delivery
     @DeleteMapping
