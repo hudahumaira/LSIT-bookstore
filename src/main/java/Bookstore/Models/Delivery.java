@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class Delivery {
     private final UUID cartId; // Associated cart ID
-    private String status; // Delivery status (e.g., "PENDING", "PACKED", "DELIVERED")
+    private String status; // Delivery status (e.g., "PENDING", "PACKED and DELIVERED")
 
     public Delivery(UUID cartId) {
         this.cartId = cartId;

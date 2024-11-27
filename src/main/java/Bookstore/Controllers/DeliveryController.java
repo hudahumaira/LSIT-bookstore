@@ -59,7 +59,7 @@ public class DeliveryController {
         }
 
         // Update the Website status to DELIVERED
-        website.setOrderStatus("DELIVERED");
+        website.setOrderStatus("PACKED and DELIVERED");
         websiteRepository.updateWebsite(website);
 
         return "Book inventory updated successfully. Delivery is now marked as DELIVERED. Cart ID: " + cartId;
