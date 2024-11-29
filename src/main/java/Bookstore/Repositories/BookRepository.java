@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class BookRepository {
+public class BookRepository implements IBookRepository {
     private final Map<UUID, Book> books = new HashMap<>();
 
     public BookRepository() {

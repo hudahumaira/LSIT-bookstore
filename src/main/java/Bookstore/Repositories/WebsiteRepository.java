@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Repository
-public class WebsiteRepository {
+public class WebsiteRepository implements IWebsiteRepository {
     private final Map<UUID, Website> websites = new HashMap<>();
 
     // Check the status of the cart by its ID

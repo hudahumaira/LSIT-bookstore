@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Repository
-public class DeliveryRepository {
+public class DeliveryRepository implements IDeliveryRepository {
     private final Map<UUID, Delivery> deliveries = new HashMap<>();
 
     // Create a new delivery associated with a cart

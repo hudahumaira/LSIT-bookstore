@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class CustomerCartRepository {
+public class CustomerCartRepository implements ICustomerCartRepository {
     private static final Map<UUID, CustomerCart> carts = new HashMap<>();
 
     // Create a new cart
@@ -17,7 +17,7 @@ public class CustomerCartRepository {
     }
 
     // Get a cart by ID
-    public static CustomerCart getCart(UUID id) {
+    public CustomerCart getCart(UUID id) {
         return carts.get(id);
     }
 
