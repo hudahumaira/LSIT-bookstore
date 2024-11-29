@@ -1,16 +1,18 @@
-#https://gitlab.com/lsit-ken3239/live-demo
+#https://gitlab.com/lsit-ken3239/roles/bookstore
 spring:
   security:
     oauth2:
       client:
         registration:
           gitlab:
-            client-id: 076f9e789fac2f361c2e0145aa0cc7298cd6c5455492f3c90999480e40406d3f
-            client-secret: gloas-2b635dc4bf910399e28ed5ede32d88305bc7ebf6450150ee8a3cac4078fecf91
-            scope: openid+profile+email
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/gitlab
+            client-id: 8ebd7335ecdd60771ce316bf6471433c7f9fa76cf0a8ad3cc234a111f76f72be
+            client-secret: gloas-844c04506a2c207f8f2fd95b628793ecfcd62aa97f0a577604bd8712056e3a38
+            redirect-uri: "http://localhost:8080/login/oauth2/code/gitlab"
+            scope:
+              - openid
+              - profile
+              - email
+            client-name: GitLab
         provider:
           gitlab:
             issuer-uri: https://gitlab.com
-            user-name-attribute: sub

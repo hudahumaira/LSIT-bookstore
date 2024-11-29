@@ -4,6 +4,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "S3BookRepositoryIntegrationTest",
+            "request": "launch",
+            "mainClass": "Bookstore.Repositories.S3BookRepositoryIntegrationTest",
+            "projectName": "lsit"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "Bookstore.Main",
