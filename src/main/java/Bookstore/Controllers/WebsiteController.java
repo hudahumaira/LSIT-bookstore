@@ -3,6 +3,8 @@ package Bookstore.Controllers;
 import Bookstore.Models.CustomerCart;
 import Bookstore.Models.Website;
 import Bookstore.Repositories.CustomerCartRepository;
+import Bookstore.Repositories.S3CustomerCartRepository;
+import Bookstore.Repositories.S3WebRepository;
 import Bookstore.Repositories.WebsiteRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +13,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/website")
 public class WebsiteController {
-    private final WebsiteRepository websiteRepository;
-    private final CustomerCartRepository cartRepository;
+    private final S3WebRepository websiteRepository;
+    private final S3CustomerCartRepository cartRepository;
 
-    public WebsiteController(WebsiteRepository websiteRepository, CustomerCartRepository cartRepository) {
+    public WebsiteController(S3WebRepository websiteRepository, S3CustomerCartRepository cartRepository) {
         this.websiteRepository = websiteRepository;
         this.cartRepository = cartRepository;
     }

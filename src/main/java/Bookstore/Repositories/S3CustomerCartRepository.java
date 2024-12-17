@@ -28,6 +28,7 @@ public class S3CustomerCartRepository implements ICustomerCartRepository{
     final String BUCKET="lsit_bookstore";
     final String PREFIX="CustomerCart/";
     
+    
     final String ENDPOINT_URL="https://storage.googleapis.com";
 
     S3Client s3client;

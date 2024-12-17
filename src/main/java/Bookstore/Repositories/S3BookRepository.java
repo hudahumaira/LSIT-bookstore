@@ -30,6 +30,7 @@ public class S3BookRepository implements IBookRepository {
     final String BUCKET="lsit_bookstore";
     final String PREFIX="Books/";
     
+    
     final String ENDPOINT_URL="https://storage.googleapis.com";
 
     S3Client s3client;

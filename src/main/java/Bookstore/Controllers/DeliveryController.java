@@ -5,6 +5,9 @@ import Bookstore.Models.CustomerCart;
 import Bookstore.Models.Website;
 import Bookstore.Repositories.BookRepository;
 import Bookstore.Repositories.CustomerCartRepository;
+import Bookstore.Repositories.S3BookRepository;
+import Bookstore.Repositories.S3CustomerCartRepository;
+import Bookstore.Repositories.S3WebRepository;
 import Bookstore.Repositories.WebsiteRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +16,11 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/delivery")
 public class DeliveryController {
-    private final BookRepository bookRepository;
-    private final CustomerCartRepository cartRepository;
-    private final WebsiteRepository websiteRepository;
+    private final S3BookRepository bookRepository;
+    private final S3CustomerCartRepository cartRepository;
+    private final S3WebRepository websiteRepository;
 
-    public DeliveryController(BookRepository bookRepository, CustomerCartRepository cartRepository, WebsiteRepository websiteRepository) {
+    public DeliveryController(S3BookRepository bookRepository, S3CustomerCartRepository cartRepository, S3WebRepository websiteRepository) {
         this.bookRepository = bookRepository;
         this.cartRepository = cartRepository;
         this.websiteRepository = websiteRepository;

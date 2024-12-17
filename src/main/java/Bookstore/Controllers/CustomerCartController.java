@@ -4,6 +4,9 @@ import Bookstore.Models.Book;
 import Bookstore.Models.CustomerCart;
 import Bookstore.Repositories.BookRepository;
 import Bookstore.Repositories.CustomerCartRepository;
+import Bookstore.Repositories.S3BookRepository;
+import Bookstore.Repositories.S3CustomerCartRepository;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -13,10 +16,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/cart")
 public class CustomerCartController {
-    private final CustomerCartRepository cartRepository;
-    private final BookRepository bookRepository;
+    private final S3CustomerCartRepository cartRepository;
+    private final S3BookRepository bookRepository;
 
-    public CustomerCartController(CustomerCartRepository cartRepository, BookRepository bookRepository) {
+    public CustomerCartController(S3CustomerCartRepository cartRepository, S3BookRepository bookRepository) {
         this.cartRepository = cartRepository;
         this.bookRepository = bookRepository;
     }

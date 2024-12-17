@@ -3,6 +3,7 @@ package Bookstore.Controllers;
 import org.springframework.web.bind.annotation.*;
 import Bookstore.Models.Book;
 import Bookstore.Repositories.BookRepository;
+import Bookstore.Repositories.S3BookRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,9 +11,9 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/books")
 public class BookController {
-    private final BookRepository bookRepository;
+    private final S3BookRepository bookRepository;
 
-    public BookController(BookRepository bookRepository) {
+    public BookController(S3BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
