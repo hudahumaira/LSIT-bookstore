@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class CustomerCart {
     private final UUID id; // Unique cart ID
     private String customerUsername; // Username of the customer
     private List<Book> books; // List of books in the cart
+    
+    @JsonProperty("paid")
     private boolean isPaid; // Payment status
     private double totalPrice; // Total price of books in the cart
 
